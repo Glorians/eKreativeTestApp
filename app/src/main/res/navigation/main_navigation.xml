@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/authorizationFragment">
+
+    <fragment
+        android:id="@+id/authorizationFragment"
+        android:name="ua.glorians.ekreative.test.app.ui.AuthorizationFragment"
+        android:label="authorization_fragment"
+        tools:layout="@layout/authorization_fragment" >
+        <action
+            android:id="@+id/action_authorizationFragment_to_listVideosFragment"
+            app:destination="@id/listVideosFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listVideosFragment"
+        android:name="ua.glorians.ekreative.test.app.ui.ListVideosFragment"
+        android:label="list_videos_fragment"
+        tools:layout="@layout/list_videos_fragment" >
+        <action
+            android:id="@+id/action_listVideosFragment_to_detailsVideoFragment"
+            app:destination="@id/detailsVideoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsVideoFragment"
+        android:name="ua.glorians.ekreative.test.app.ui.DetailsVideoFragment"
+        android:label="detail_video_fragment"
+        tools:layout="@layout/detail_video_fragment" />
+</navigation>

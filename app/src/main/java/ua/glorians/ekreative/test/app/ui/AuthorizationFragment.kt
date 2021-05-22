@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import ua.glorians.ekreative.test.app.R
 import ua.glorians.ekreative.test.app.databinding.AuthorizationFragmentBinding
 import ua.glorians.ekreative.test.app.viewmodel.AuthorizationViewModel
 
@@ -34,6 +37,15 @@ class AuthorizationFragment : Fragment() {
 
     private fun initFunc() {
 
+    }
+
+    private fun googleAuth() {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        val googleSignInClient = GoogleSignIn.getClient(requireActivity().applicationContext, gso)
     }
 
 

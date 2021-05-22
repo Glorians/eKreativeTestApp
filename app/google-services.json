@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "234662259181",
+    "project_id": "testprojectekreative",
+    "storage_bucket": "testprojectekreative.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234662259181:android:2257f2f6e93ccf53d89fe4",
+        "android_client_info": {
+          "package_name": "ua.glorians.ekreative.test.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "234662259181-b4dd1invqho8pqmuvh223ff2ton18jae.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhLmQYbv-Lh7HBS9i0ee3-d0Rwk5HN-aw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "234662259181-b4dd1invqho8pqmuvh223ff2ton18jae.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
