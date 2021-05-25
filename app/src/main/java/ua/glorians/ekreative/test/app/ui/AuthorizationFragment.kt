@@ -9,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.facebook.*
+import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.facebook.login.widget.LoginButton
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -30,7 +30,7 @@ class AuthorizationFragment : Fragment() {
     private lateinit var binding: AuthorizationFragmentBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var btnSignGoogle: MaterialButton
-    private lateinit var btnSignFacebook: LoginButton
+    private lateinit var btnSignFacebook: MaterialButton
     private lateinit var callbackManagerFacebook: CallbackManager
     private lateinit var googleSignInClient: GoogleSignInClient
     private val viewModel: AuthorizationViewModel by viewModels()
@@ -51,8 +51,8 @@ class AuthorizationFragment : Fragment() {
 
     //Variable Initialization
     private fun initFields() {
-        btnSignGoogle = binding.btnSignGoogle
-        btnSignFacebook = binding.btnSignFacebook
+        btnSignGoogle = binding.btnSignInGoogle
+        btnSignFacebook = binding.btnSignInFacebook
         auth = FirebaseAuth.getInstance()
     }
 
@@ -97,9 +97,17 @@ class AuthorizationFragment : Fragment() {
     //Sign in Facebook
     private fun signInFacebook() {
         callbackManagerFacebook = CallbackManager.Factory.create()
-        btnSignFacebook.setReadPermissions("email", "public_profile")
-        btnSignFacebook.fragment = this
-        btnSignFacebook.registerCallback(
+
+        //Click Button
+        btnSignFacebook.setOnClickListener {
+            LoginManager.getInstance().logInWithReadPermissions(
+                this,
+                listOf("email", "public_profile")
+            )
+        }
+
+        //Get Result
+        LoginManager.getInstance().registerCallback(
             callbackManagerFacebook,
             object : FacebookCallback<LoginResult> {
                 override fun onSuccess(result: LoginResult?) {
@@ -109,11 +117,11 @@ class AuthorizationFragment : Fragment() {
                 override fun onCancel() {
                     Log.d(TAG, "facebook onCancel")
                 }
-
                 override fun onError(error: FacebookException?) {
                     Log.d(TAG, "onError", error)
                 }
-            })
+            }
+        )
     }
 
     //Sign out
@@ -131,6 +139,7 @@ class AuthorizationFragment : Fragment() {
     //Firebase Authorization witch Facebook
     private fun firebaseAuthFacebook(token: AccessToken) {
         val credential = FacebookAuthProvider.getCredential(token.token)
+        Log.d(TAG, token.token)
         firebaseAuth(credential)
     }
 
