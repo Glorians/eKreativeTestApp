@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -43,10 +44,16 @@ class AuthorizationFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+    }
+
     override fun onStart() {
         super.onStart()
         initFields()
         initFunc()
+//        clearBackStack()
     }
 
     //Variable Initialization
@@ -148,8 +155,10 @@ class AuthorizationFragment : Fragment() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    showSnack(binding.root, "Auth Success ${user?.displayName}")
+                    auth.currentUser
+                    if (auth.currentUser != null) {
+                        navigateToListVideos()
+                    }
                 } else {
                     showSnack(binding.root, "Auth Firebase Error")
                 }
@@ -173,6 +182,10 @@ class AuthorizationFragment : Fragment() {
         else {
             callbackManagerFacebook.onActivityResult(requestCode, resultCode, data)
         }
+    }
+
+    private fun navigateToListVideos() {
+        Navigation.findNavController(binding.root).navigate(R.id.navigationFromAuthorizationToListVideos)
     }
 
     companion object {

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/authorizationFragment">
+    app:startDestination="@id/listVideosFragment">
 
     <fragment
         android:id="@+id/authorizationFragment"
@@ -11,7 +11,9 @@
         android:label="authorization_fragment"
         tools:layout="@layout/authorization_fragment" >
         <action
-            android:id="@+id/action_authorizationFragment_to_listVideosFragment"
+            android:id="@+id/navigationFromAuthorizationToListVideos"
+            app:popUpTo="@id/authorizationFragment"
+            app:popUpToInclusive="true"
             app:destination="@id/listVideosFragment" />
     </fragment>
     <fragment
@@ -20,8 +22,13 @@
         android:label="list_videos_fragment"
         tools:layout="@layout/list_videos_fragment" >
         <action
-            android:id="@+id/action_listVideosFragment_to_detailsVideoFragment"
+            android:id="@+id/navigationFromListVideosToDetailsVideo"
             app:destination="@id/detailsVideoFragment" />
+        <action
+            android:id="@+id/navigationFromListVideosToAuthorization"
+            app:popUpTo="@id/listVideosFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/authorizationFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailsVideoFragment"

@@ -2,10 +2,13 @@ package ua.glorians.ekreative.test.app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.navigation.Navigation
+import com.google.firebase.auth.FirebaseAuth
 import ua.glorians.ekreative.test.app.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +28,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFunc() {
-
     }
+
+
 
 }

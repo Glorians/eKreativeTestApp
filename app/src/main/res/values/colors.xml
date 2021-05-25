@@ -13,6 +13,8 @@
     <color name="bluePrimary">#20243d</color>
     <color name="blueLight">#494c68</color>
     <color name="blueDark">#000018</color>
+
+    <color name="eKreativeRed">#d5305c</color>
     <color name="redSecondary">#d42d40</color>
     <color name="redLight">#ff656b</color>
     <color name="redDark">#9b001a</color>
