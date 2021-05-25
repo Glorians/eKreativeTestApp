@@ -9,7 +9,7 @@ plugins {
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
-    android.dataBinding.enabled // DataBinding
+    android.buildFeatures.dataBinding // DataBinding
 
     defaultConfig {
         applicationId "ua.glorians.ekreative.test.app"
@@ -62,9 +62,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation platform('com.google.firebase:firebase-bom:28.0.1')
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
-    implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'com.google.android.gms:play-services-auth:19.0.0' //auth google
+
+    // Facebook auth
+    implementation 'com.facebook.android:facebook-android-sdk:9.1.1'
 
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'

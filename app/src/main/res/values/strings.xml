@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">eKreativeTestApp</string>
+    <string name="facebook_app_id">284361516725452</string>
+    <string name="fb_login_protocol_scheme">fb284361516725452</string>
 </resources>
