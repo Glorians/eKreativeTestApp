@@ -17,8 +17,8 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "YOUTUBE_API_KEY", "\"AIzaSyD9_0gIf2hP_ADJR5bkFREDE-z0DgTtZjA\""
     }
 
     buildTypes {
@@ -52,7 +52,6 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
 
-
     //Navigation
     def nav_version = "2.3.5"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
@@ -65,13 +64,28 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'com.google.android.gms:play-services-auth:19.0.0' //auth google
 
+    //Youtube API
+    implementation('com.google.api-client:google-api-client-android:1.22.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+    implementation('com.google.apis:google-api-services-youtube:v3-rev183-1.22.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+
     // Facebook auth
     implementation 'com.facebook.android:facebook-android-sdk:9.1.1'
 
-    //Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    //Retrofit and libraries needed for it
+    def okHttp_version = "4.8.0"
+    def retrofit_version = "2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation "com.squareup.okhttp3:okhttp:$okHttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okHttp_version"
+
+    //Animation loading content
+    implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
 
     //Tests
     testImplementation 'junit:junit:4.13.2'

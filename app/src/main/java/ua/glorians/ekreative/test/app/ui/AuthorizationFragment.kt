@@ -53,7 +53,6 @@ class AuthorizationFragment : Fragment() {
         super.onStart()
         initFields()
         initFunc()
-//        clearBackStack()
     }
 
     //Variable Initialization

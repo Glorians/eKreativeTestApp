@@ -3,4 +3,5 @@
     <string name="facebook_app_id">284361516725452</string>
     <string name="fb_login_protocol_scheme">fb284361516725452</string>
     <string name="sign_in">Sign in</string>
+    <string name="thumbnails_video">thumbnails video</string>
 </resources>
