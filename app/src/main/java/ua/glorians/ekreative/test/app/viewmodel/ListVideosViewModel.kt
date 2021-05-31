@@ -8,11 +8,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ua.glorians.ekreative.test.app.data.model.ListVideos
+import ua.glorians.ekreative.test.app.data.model.VideoDetailsYT
+import ua.glorians.ekreative.test.app.data.model.VideoYT
 import ua.glorians.ekreative.test.app.data.network.RetrofitClient
 
 class ListVideosViewModel : ViewModel() {
 
     val listVideos = MutableLiveData<ListVideos>()
+    val video = MutableLiveData<VideoDetailsYT>()
 
     fun loadVideos() {
         viewModelScope.launch(Dispatchers.IO) {

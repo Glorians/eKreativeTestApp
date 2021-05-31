@@ -1,11 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.DetailsVideoFragment">
 
 
+    <ImageView
+        android:id="@+id/thumbnailDetailsVideo"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/thumbnails_video"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <!--    title-->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/titleDetailsVideo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/montserrat_bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thumbnailDetailsVideo" />
+
+
+    <!--    view count-->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/viewCountDetailsVideo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/montserrat_regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleDetailsVideo" />
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewCountDetailsVideo">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--    description-->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/descriptionDetailsVideo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/montserrat_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!--    group counts view-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/groupCountsViews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/descriptionDetailsVideo">
+
+                <!--    like count-->
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iconLikeCount"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/ic_like"
+                    android:tint="?attr/colorPrimary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textLikeDetailsVideo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/montserrat_light"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="@+id/iconLikeCount"
+                    app:layout_constraintStart_toStartOf="@+id/iconLikeCount"
+                    app:layout_constraintTop_toBottomOf="@+id/iconLikeCount" />
+
+                <!--    favorite count-->
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iconFavoriteCount"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_star"
+                    android:tint="?attr/colorPrimary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/iconCommentCount"
+                    app:layout_constraintStart_toEndOf="@id/iconLikeCount"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textFavoriteDetailsVideo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/montserrat_light"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="@+id/iconFavoriteCount"
+                    app:layout_constraintStart_toStartOf="@+id/iconFavoriteCount"
+                    app:layout_constraintTop_toBottomOf="@+id/iconFavoriteCount" />
+
+                <!--    comment count-->
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iconCommentCount"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="20dp"
+                    android:src="@drawable/ic_comment"
+                    android:tint="?attr/colorPrimary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textCommentDetailsVideo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/montserrat_light"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="@+id/iconCommentCount"
+                    app:layout_constraintStart_toStartOf="@+id/iconCommentCount"
+                    app:layout_constraintTop_toBottomOf="@+id/iconCommentCount" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnShareLinkDetailsVideo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_share"
+        app:tint = "#eee"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/share" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

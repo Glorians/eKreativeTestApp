@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -57,6 +58,7 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
+
     //Firebase and google services
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation platform('com.google.firebase:firebase-bom:28.0.1')
@@ -65,12 +67,12 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:19.0.0' //auth google
 
     //Youtube API
-    implementation('com.google.api-client:google-api-client-android:1.22.0') {
-        exclude group: 'org.apache.httpcomponents'
-    }
-    implementation('com.google.apis:google-api-services-youtube:v3-rev183-1.22.0') {
-        exclude group: 'org.apache.httpcomponents'
-    }
+//    implementation('com.google.api-client:google-api-client-android:1.22.0') {
+//        exclude group: 'org.apache.httpcomponents'
+//    }
+//    implementation('com.google.apis:google-api-services-youtube:v3-rev183-1.22.0') {
+//        exclude group: 'org.apache.httpcomponents'
+//    }
 
     // Facebook auth
     implementation 'com.facebook.android:facebook-android-sdk:9.1.1'

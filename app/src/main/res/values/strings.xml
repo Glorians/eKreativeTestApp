@@ -4,4 +4,6 @@
     <string name="fb_login_protocol_scheme">fb284361516725452</string>
     <string name="sign_in">Sign in</string>
     <string name="thumbnails_video">thumbnails video</string>
+    <string name="views">views</string>
+    <string name="share">share</string>
 </resources>

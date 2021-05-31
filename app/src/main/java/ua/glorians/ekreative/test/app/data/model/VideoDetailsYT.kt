@@ -2,10 +2,10 @@ package ua.glorians.ekreative.test.app.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class VideoYT(
+data class VideoDetailsYT(
 
     @SerializedName("id")
-    val videoID: VideoID,
+    val id: String,
 
     @SerializedName("snippet")
     val snippet: SnippetYT,

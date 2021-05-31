@@ -1,22 +1,20 @@
 package ua.glorians.ekreative.test.app.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import ua.glorians.ekreative.test.app.R
 import ua.glorians.ekreative.test.app.data.model.ListVideos
-import ua.glorians.ekreative.test.app.data.network.RetrofitClient
+import ua.glorians.ekreative.test.app.data.model.VideoYT
 import ua.glorians.ekreative.test.app.databinding.ListVideosFragmentBinding
 import ua.glorians.ekreative.test.app.ui.adapters.VideoListAdapter
 import ua.glorians.ekreative.test.app.utils.showSnack
@@ -39,6 +37,7 @@ class ListVideosFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        Log.d(TAG, "onStart")
         checkAuthorization()
         initFields()
         initFunc()
@@ -47,6 +46,21 @@ class ListVideosFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         checkAuthorization()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "onDestroy")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d(TAG, "onStop")
     }
 
     //Variable Initialization
@@ -73,11 +87,21 @@ class ListVideosFragment : Fragment() {
         viewModel.listVideos.observe(this) { listVideo ->
             setAdapter(listVideo)
         }
+        viewModel.video.observe(this) {
+            showSnack(binding.root, it.toString())
+        }
     }
 
     //Set adapter in Recycler View
     private fun setAdapter(listVideo: ListVideos) {
-        listVideosRV.adapter = VideoListAdapter(listVideo.listVideosYT)
+        listVideosRV.adapter = VideoListAdapter(
+            listVideo.listVideosYT,
+            object : VideoListAdapter.CallbackVideoList {
+                override fun onItemClicked(videoYT: VideoYT) {
+                    navigateToDetailsVideoFragment(videoYT.videoID.videoId)
+                }
+            }
+        )
         listVideosRV.layoutManager = LinearLayoutManager(context)
     }
 
@@ -86,8 +110,29 @@ class ListVideosFragment : Fragment() {
         Navigation.findNavController(binding.root).navigate(R.id.navigationFromListVideosToAuthorization)
     }
 
+    private fun navigateToDetailsVideoFragment(videoID: String) {
+        Navigation.findNavController(binding.root).navigate(
+            ListVideosFragmentDirections.navigationToDetailsVideo(videoID)
+        )
+    }
+
     companion object {
         private const val TAG = "ListVideosFragment"
+    }
+
+    private data class ListVideosFragmentDirections(
+        val videoID: String
+    ) : NavDirections {
+        override fun getActionId(): Int = R.id.navigationFromListVideosToDetailsVideo
+
+        override fun getArguments(): Bundle {
+            val bundle = Bundle()
+            bundle.putString("videoID", this.videoID)
+            return bundle
+        }
+        companion object {
+            fun navigationToDetailsVideo(videoID: String): NavDirections = ListVideosFragmentDirections(videoID)
+        }
     }
 
 }

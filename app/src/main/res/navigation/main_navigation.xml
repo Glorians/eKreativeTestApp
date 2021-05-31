@@ -34,5 +34,9 @@
         android:id="@+id/detailsVideoFragment"
         android:name="ua.glorians.ekreative.test.app.ui.DetailsVideoFragment"
         android:label="detail_video_fragment"
-        tools:layout="@layout/detail_video_fragment" />
+        tools:layout="@layout/detail_video_fragment" >
+        <argument
+            android:name="videoID"
+            app:argType="string" />
+    </fragment>
 </navigation>

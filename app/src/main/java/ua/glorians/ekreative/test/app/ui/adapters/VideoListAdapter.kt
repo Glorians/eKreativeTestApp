@@ -8,15 +8,22 @@ import ua.glorians.ekreative.test.app.R
 import ua.glorians.ekreative.test.app.data.model.VideoYT
 import ua.glorians.ekreative.test.app.databinding.ItemVideoYoutubeBinding
 
-class VideoListAdapter(private val listVideos: List<VideoYT>): RecyclerView.Adapter<VideoListAdapter.ViewHolder>() {
+class VideoListAdapter(private val listVideos: List<VideoYT>, private val callback: CallbackVideoList): RecyclerView.Adapter<VideoListAdapter.ViewHolder>() {
 
     override fun getItemCount() = listVideos.size
     private lateinit var layoutInflater: LayoutInflater
     private lateinit var binding: ItemVideoYoutubeBinding
 
-    inner class ViewHolder(view: ItemVideoYoutubeBinding): RecyclerView.ViewHolder(view.root){
+    inner class ViewHolder(val view: ItemVideoYoutubeBinding): RecyclerView.ViewHolder(view.root){
         val title = view.titleItemVideo
         val image = view.thumbnailItemVideo
+
+        fun setOnCallBack(videoYT: VideoYT) {
+            view.root.setOnClickListener {
+                if (adapterPosition != RecyclerView.NO_POSITION) callback.onItemClicked(videoYT)
+            }
+        }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,6 +36,7 @@ class VideoListAdapter(private val listVideos: List<VideoYT>): RecyclerView.Adap
         val video = listVideos[position]
         holder.title.text = video.snippet.title
         imageLoad(holder, video.snippet.thumbnails.default.url)
+        holder.setOnCallBack(video)
     }
 
     private fun imageLoad(holder: ViewHolder, url: String) {
@@ -36,6 +44,10 @@ class VideoListAdapter(private val listVideos: List<VideoYT>): RecyclerView.Adap
             .load(url)
             .placeholder(R.drawable.placeholder_thumbnail_video)
             .into(holder.image)
+    }
+
+    interface CallbackVideoList{
+        fun onItemClicked(videoYT: VideoYT)
     }
 
 }
