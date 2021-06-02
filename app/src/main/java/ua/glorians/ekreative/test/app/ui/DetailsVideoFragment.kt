@@ -42,30 +42,9 @@ class DetailsVideoFragment : Fragment() {
     }
 
     override fun onStart() {
-        Log.d(TAG, "onStart")
         super.onStart()
         initFields()
         initFunc()
-    }
-
-    override fun onResume() {
-        Log.d(TAG, "onResume")
-        super.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d(TAG, "onPause")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d(TAG, "onDestroy")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d(TAG, "onStop")
     }
 
     private fun initFields() {
@@ -92,7 +71,7 @@ class DetailsVideoFragment : Fragment() {
             if (it != null) {
                 title.text = it.snippet.title
                 viewCount.text = "${it.statistics.viewCount} views"
-                imageLoad(it.snippet.thumbnails.high.url)
+                imageLoad(it.snippet.thumbnails.highSize.url)
                 description.text = it.snippet.description
                 likes.text = "${it.statistics.likeCount} likes"
                 favorites.text = "${it.statistics.favoriteCount} favorite"

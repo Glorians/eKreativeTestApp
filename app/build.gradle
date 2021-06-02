@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
     id 'androidx.navigation.safeargs.kotlin'
@@ -66,14 +67,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'com.google.android.gms:play-services-auth:19.0.0' //auth google
 
-    //Youtube API
-//    implementation('com.google.api-client:google-api-client-android:1.22.0') {
-//        exclude group: 'org.apache.httpcomponents'
-//    }
-//    implementation('com.google.apis:google-api-services-youtube:v3-rev183-1.22.0') {
-//        exclude group: 'org.apache.httpcomponents'
-//    }
-
     // Facebook auth
     implementation 'com.facebook.android:facebook-android-sdk:9.1.1'
 
@@ -86,6 +79,12 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:$okHttp_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttp_version"
 
+    //Room Database
+    def room_version = "2.3.0"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+
     //Animation loading content
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
 
@@ -93,5 +92,6 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    testImplementation "androidx.room:room-testing:$room_version"
 
 }

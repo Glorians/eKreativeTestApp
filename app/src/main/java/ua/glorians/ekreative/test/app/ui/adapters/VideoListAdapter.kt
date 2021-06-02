@@ -35,7 +35,7 @@ class VideoListAdapter(private val listVideos: List<VideoYT>, private val callba
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val video = listVideos[position]
         holder.title.text = video.snippet.title
-        imageLoad(holder, video.snippet.thumbnails.default.url)
+        imageLoad(holder, video.snippet.thumbnails.defaultSize.url)
         holder.setOnCallBack(video)
     }
 

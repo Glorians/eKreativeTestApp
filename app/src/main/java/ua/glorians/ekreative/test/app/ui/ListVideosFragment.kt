@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import ua.glorians.ekreative.test.app.R
-import ua.glorians.ekreative.test.app.data.model.ListVideos
+import ua.glorians.ekreative.test.app.data.model.ResponseListVideo
 import ua.glorians.ekreative.test.app.data.model.VideoYT
 import ua.glorians.ekreative.test.app.databinding.ListVideosFragmentBinding
 import ua.glorians.ekreative.test.app.ui.adapters.VideoListAdapter
@@ -37,7 +37,6 @@ class ListVideosFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        Log.d(TAG, "onStart")
         checkAuthorization()
         initFields()
         initFunc()
@@ -48,21 +47,6 @@ class ListVideosFragment : Fragment() {
         checkAuthorization()
     }
 
-    override fun onPause() {
-        super.onPause()
-        Log.d(TAG, "onPause")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d(TAG, "onDestroy")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d(TAG, "onStop")
-    }
-
     //Variable Initialization
     private fun initFields() {
         listVideosRV = binding.listVideosYT
@@ -70,7 +54,7 @@ class ListVideosFragment : Fragment() {
 
     //Functions Initialization
     private fun initFunc() {
-        loadVideos()
+//        loadVideos()
     }
 
     //Check authorization user
@@ -93,12 +77,12 @@ class ListVideosFragment : Fragment() {
     }
 
     //Set adapter in Recycler View
-    private fun setAdapter(listVideo: ListVideos) {
+    private fun setAdapter(listVideo: ResponseListVideo) {
         listVideosRV.adapter = VideoListAdapter(
             listVideo.listVideosYT,
             object : VideoListAdapter.CallbackVideoList {
                 override fun onItemClicked(videoYT: VideoYT) {
-                    navigateToDetailsVideoFragment(videoYT.videoID.videoId)
+                    navigateToDetailsVideoFragment(videoYT.videoID.id)
                 }
             }
         )

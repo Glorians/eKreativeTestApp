@@ -1,15 +1,25 @@
 package ua.glorians.ekreative.test.app.data.model
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+
 import com.google.gson.annotations.SerializedName
 
+@Entity(
+    tableName = "thumbnails_table",
+    primaryKeys = ["publishTimeID"]
+)
 data class ThumbnailsYT(
 
+    @ColumnInfo(name = "publishTimeID")
+    val publishTime: String,
+
     @SerializedName("default")
-    val default: ThumbnailType,
+    val defaultSize: ThumbnailType,
 
     @SerializedName("medium")
-    val medium: ThumbnailType,
+    val mediumSize: ThumbnailType,
 
     @SerializedName("high")
-    val high: ThumbnailType
+    val highSize: ThumbnailType
 )

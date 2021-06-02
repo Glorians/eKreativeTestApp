@@ -2,13 +2,10 @@ package ua.glorians.ekreative.test.app.data.network.api
 
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 import ua.glorians.ekreative.test.app.BuildConfig
-import ua.glorians.ekreative.test.app.data.model.ListVideos
-import ua.glorians.ekreative.test.app.data.model.ResultVideoDetails
-import ua.glorians.ekreative.test.app.data.model.VideoDetailsYT
-import ua.glorians.ekreative.test.app.data.model.VideoYT
+import ua.glorians.ekreative.test.app.data.model.ResponseListVideo
+import ua.glorians.ekreative.test.app.data.model.ResponseVideoDetails
 
 interface YoutubeAPI {
 
@@ -32,7 +29,7 @@ interface YoutubeAPI {
         @Query("order")
         order: String = "date",
 
-    ): Response<ListVideos>
+    ): Response<ResponseListVideo>
 
     //Details Video
     @GET("videos?")
@@ -46,7 +43,7 @@ interface YoutubeAPI {
         @Query("part")
         parts: List<String> = listOf("statistics", "snippet")
 
-    ) : Response<ResultVideoDetails>
+    ) : Response<ResponseVideoDetails>
 
     companion object {
         const val KEY = BuildConfig.YOUTUBE_API_KEY

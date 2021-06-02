@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class VideoID(
     @SerializedName("videoId")
-    val videoId: String
+    val id: String
 )
