@@ -12,7 +12,7 @@ import com.google.gson.annotations.SerializedName
 data class ThumbnailsYT(
 
     @ColumnInfo(name = "publishTimeID")
-    val publishTime: String,
+    var publishTime: String,
 
     @SerializedName("default")
     val defaultSize: ThumbnailType,

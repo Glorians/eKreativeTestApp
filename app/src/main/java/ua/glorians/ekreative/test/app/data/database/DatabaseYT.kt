@@ -36,7 +36,7 @@ abstract class DatabaseYT: RoomDatabase() {
             Room.databaseBuilder(
                 context.applicationContext,
                 DatabaseYT::class.java,
-                "video_yt_db.db"
+                "videos_database"
             ).build()
     }
 }

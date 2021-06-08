@@ -13,19 +13,23 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import ua.glorians.ekreative.test.app.R
-import ua.glorians.ekreative.test.app.data.model.ResponseListVideo
+import ua.glorians.ekreative.test.app.VideoApplication
 import ua.glorians.ekreative.test.app.data.model.VideoYT
 import ua.glorians.ekreative.test.app.databinding.ListVideosFragmentBinding
 import ua.glorians.ekreative.test.app.ui.adapters.VideoListAdapter
 import ua.glorians.ekreative.test.app.utils.showSnack
 import ua.glorians.ekreative.test.app.viewmodel.ListVideosViewModel
+import ua.glorians.ekreative.test.app.viewmodel.VideoViewModel
+import ua.glorians.ekreative.test.app.viewmodel.VideoViewModelFactory
 
 class ListVideosFragment : Fragment() {
 
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var binding: ListVideosFragmentBinding
     private lateinit var listVideosRV: RecyclerView
-    private val viewModel: ListVideosViewModel by viewModels()
+    private val viewModel: VideoViewModel by viewModels {
+        VideoViewModelFactory((requireContext().applicationContext as VideoApplication).repository)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,7 +58,7 @@ class ListVideosFragment : Fragment() {
 
     //Functions Initialization
     private fun initFunc() {
-//        loadVideos()
+        loadVideos()
     }
 
     //Check authorization user
@@ -67,19 +71,20 @@ class ListVideosFragment : Fragment() {
 
     //Loading Videos Data
     private fun loadVideos() {
-        viewModel.loadVideos()
-        viewModel.listVideos.observe(this) { listVideo ->
-            setAdapter(listVideo)
-        }
-        viewModel.video.observe(this) {
-            showSnack(binding.root, it.toString())
+        viewModel.initListVideos()
+        viewModel.allVideos?.observe(this) { listVideoWithSAT ->
+            val listVideoYT = mutableListOf<VideoYT>()
+            listVideoWithSAT.forEach {
+                listVideoYT.add(it.toVideoYT())
+            }
+            setAdapter(listVideoYT)
         }
     }
 
     //Set adapter in Recycler View
-    private fun setAdapter(listVideo: ResponseListVideo) {
+    private fun setAdapter(listVideo: List<VideoYT>) {
         listVideosRV.adapter = VideoListAdapter(
-            listVideo.listVideosYT,
+            listVideo,
             object : VideoListAdapter.CallbackVideoList {
                 override fun onItemClicked(videoYT: VideoYT) {
                     navigateToDetailsVideoFragment(videoYT.videoID.id)

@@ -12,7 +12,7 @@ class Converters {
 
     @TypeConverter
     fun toThumbnailType(data: String): ThumbnailType {
-        return ThumbnailType(url = data)
+        return ThumbnailType(data)
     }
 
     @TypeConverter

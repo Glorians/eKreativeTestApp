@@ -12,10 +12,7 @@ import com.google.gson.annotations.SerializedName
 data class SnippetYT(
 
     @ColumnInfo(name = "snippet_video_id")
-    val videoID: VideoID,
-
-    @SerializedName("publishedAt")
-    val publishedAt: String,
+    var videoID: VideoID,
 
     @SerializedName("title")
     val title: String,
@@ -28,5 +25,5 @@ data class SnippetYT(
     val thumbnails: ThumbnailsYT,
 
     @SerializedName("publishTime")
-    val publishTime: String
+    var publishTime: String
 )
