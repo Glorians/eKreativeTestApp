@@ -27,6 +27,7 @@ class ListVideosFragment : Fragment() {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var binding: ListVideosFragmentBinding
     private lateinit var listVideosRV: RecyclerView
+    private lateinit var videoAdapter: VideoListAdapter
     private val viewModel: VideoViewModel by viewModels {
         VideoViewModelFactory((requireContext().applicationContext as VideoApplication).repository)
     }
@@ -42,13 +43,22 @@ class ListVideosFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         checkAuthorization()
-        initFields()
+//        initFields()
         initFunc()
+        Log.d(TAG, "onStart")
     }
 
     override fun onResume() {
         super.onResume()
         checkAuthorization()
+        Log.d(TAG, "onResume")
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initFields()
+        setAdapter()
+        Log.d(TAG, "onViewCreated")
     }
 
     //Variable Initialization
@@ -58,7 +68,7 @@ class ListVideosFragment : Fragment() {
 
     //Functions Initialization
     private fun initFunc() {
-        loadVideos()
+        loadData()
     }
 
     //Check authorization user
@@ -69,29 +79,27 @@ class ListVideosFragment : Fragment() {
         }
     }
 
-    //Loading Videos Data
-    private fun loadVideos() {
-        viewModel.initListVideos()
-        viewModel.allVideos?.observe(this) { listVideoWithSAT ->
-            val listVideoYT = mutableListOf<VideoYT>()
-            listVideoWithSAT.forEach {
-                listVideoYT.add(it.toVideoYT())
-            }
-            setAdapter(listVideoYT)
+    //Set adapter in Recycler View
+    private fun setAdapter() {
+        videoAdapter = VideoListAdapter()
+        listVideosRV.apply {
+            adapter=  videoAdapter
+            layoutManager = LinearLayoutManager(activity)
+        }
+        videoAdapter.setOnClickListener { video ->
+            navigateToDetailsVideoFragment(video.videoID.id)
         }
     }
 
-    //Set adapter in Recycler View
-    private fun setAdapter(listVideo: List<VideoYT>) {
-        listVideosRV.adapter = VideoListAdapter(
-            listVideo,
-            object : VideoListAdapter.CallbackVideoList {
-                override fun onItemClicked(videoYT: VideoYT) {
-                    navigateToDetailsVideoFragment(videoYT.videoID.id)
-                }
+    private fun loadData() {
+        viewModel.initListVideos()
+        viewModel.allVideos?.observe(viewLifecycleOwner, { resultListVideo ->
+            val listVideos = mutableListOf<VideoYT>()
+            resultListVideo.forEach {
+                listVideos.add(it.toVideoYT())
             }
-        )
-        listVideosRV.layoutManager = LinearLayoutManager(context)
+            videoAdapter.differ.submitList(listVideos)
+        })
     }
 
     // Navigate to Authorization Fragment
