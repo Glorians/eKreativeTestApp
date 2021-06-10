@@ -20,7 +20,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "YOUTUBE_API_KEY", "\"AIzaSyBcXfV4ZDcqG0bAsvbZaNRg41o1XMlU-oE\""
+        buildConfigField "String", "YOUTUBE_API_KEY", "\""+getApiKeys()+"\""
     }
 
     buildTypes {
@@ -40,6 +40,12 @@ android {
     buildFeatures {
         viewBinding true
     }
+}
+
+static def getApiKeys() {
+    def Properties props = new Properties()
+    props.load(new FileInputStream(new File("secrets.properties")))
+    return props["API_KEY_YOUTUBE"]
 }
 
 dependencies {

@@ -1,11 +1,11 @@
 package ua.glorians.ekreative.test.app
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asLiveData
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.coroutines.*
-import org.junit.After
+import org.junit.AfterClass
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -20,7 +20,7 @@ import kotlin.jvm.Throws
 @RunWith(AndroidJUnit4::class)
 class TestingDatabase {
     private lateinit var repository: RepositoryVideo
-    private var appContext = InstrumentationRegistry.getInstrumentation().targetContext
+    private lateinit var appContext: Context
 
     @Before
     fun createRepository() {
@@ -28,110 +28,98 @@ class TestingDatabase {
         repository = RepositoryVideo(DatabaseYT(appContext))
     }
 
-    @Test
+    @Test // Video Youtube
     @Throws(Exception::class)
     fun testWriteAndReadVideoYT_ToDatabase() {
         val liveValue = MutableLiveData<VideoWithSnippetAndThumbnail>()
 
         runBlocking(Dispatchers.Main) {
 
-            repository.upsertVideoYT(getVideoYT_Fake()) // Insert Video
-            val videos = repository.allVideosYT.asLiveData() // SELECT ALL videos
+            repository.upsertVideoYT(videoFake) // Insert Video
+            val videos = repository.getVideoFromDatabase(videoID_Fake) // SELECT ALL videos
 
-            videos.observeForever {
-                if (it.isNotEmpty()) {
-                    val video = it[0]
-                    liveValue.postValue(video)
-                    println("video: $video")
-                }
-                else fail("list is empty")
+            videos.observeForever { video ->
+                liveValue.postValue(video)
+                println("video: $video")
             }
-
             liveValue.observeForever {
-                assertEquals(getSnippetYT_Fake().title, it.snippetAndThumbnail.snippet.title)
+                assertEquals(snippetFake.title, it.snippetAndThumbnail.snippet.title)
             }
         }
     }
 
-    @Test
+    @Test // Snippet With Thumbnail
     @Throws(Exception::class)
     fun testWriteAndReadSnippetYT() {
         val liveValue = MutableLiveData<SnippetAndThumbnail>()
+        runBlocking((Dispatchers.Main)) {
 
-        runBlocking(Dispatchers.Main) {
-
-            repository.upsertSnippet(getSnippetYT_Fake()) // Insert Snippet
-            val snippets = repository.getSnippetsFromDatabase() // SELECT ALL snippets
-
-            if (snippets.isNotEmpty()) {
-                val snippet = snippets[0]
-                liveValue.postValue(snippet)
-                println("snippet: $snippet")
-            }
-            else fail("list is empty")
-
+            repository.upsertSnippet(snippetFake) // Insert Snippet
+            val snippet =
+                repository.getSnippetByID(snippetFake.publishTime) // SELECT snippet
+            liveValue.postValue(snippet)
             liveValue.observeForever {
-                assertEquals(getSnippetYT_Fake().title, it.snippet.title)
+                println("snippet: $it")
+                assertEquals(snippetFake.title, it.snippet.title)
             }
         }
     }
 
-    @Test
+    @Test // Thumbnail
     @Throws(Exception::class)
     fun testWriteAndReadThumbnailYT() {
         val liveValue = MutableLiveData<ThumbnailsYT>()
-
         runBlocking(Dispatchers.Main) {
-
-            repository.upsertThumbnail(getThumbnailYT_Fake()) // Insert Thumbnail
-            val thumbnails = repository.getThumbnails() // SELECT ALL thumbnails
-
-            if (thumbnails.isNotEmpty()) {
-                val thumbnail = thumbnails[0]
-                liveValue.postValue(thumbnail)
-                println("thumbnail: $thumbnail")
-            }
-            else fail("list is empty")
+            repository.upsertThumbnail(thumbnailFake) // Insert Thumbnail
+            val thumbnail =
+                repository.getThumbnailByID(thumbnailFake.publishTime) // SELECT thumbnail
+            liveValue.postValue(thumbnail)
 
             liveValue.observeForever {
-                assertEquals(getThumbnailYT_Fake().mediumSize.url, it.mediumSize.url)
+                println("thumbnail: $it")
+                assertEquals(thumbnailFake.mediumSize.url, it.mediumSize.url)
             }
         }
     }
 
-    @After
-    fun clearDatabase() {
 
+
+    companion object {
+
+        @AfterClass// Clear Database
+        fun clearDatabase() {
+            val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+            val repository = RepositoryVideo(DatabaseYT(appContext))
+            runBlocking {
+                repository.deleteSnippet(snippetFake)
+                repository.deleteThumbnail(thumbnailFake)
+                repository.deleteVideoYT(videoFake)
+            }
+        }
+        // Fakes Objects //
+        private val videoID_Fake = VideoID("ihtZV0sHQ94")
+
+        private val thumbnailFake =
+            ThumbnailsYT(
+                publishTime = "2020.07.22",
+                defaultSize = ThumbnailType("default image"),
+                mediumSize = ThumbnailType("medium image"),
+                highSize = ThumbnailType("high image")
+            )
+
+        private val snippetFake =
+            SnippetYT(
+                videoID = videoID_Fake,
+                title = "Testing Video",
+                description = "Description video la-la-la-la-la",
+                thumbnails = thumbnailFake,
+                publishTime = "2020.07.22"
+            )
+
+        private val videoFake =
+            VideoYT(
+                videoID = videoID_Fake,
+                snippet = snippetFake
+            )
     }
-
-    private fun getVideoYT_Fake(): VideoYT {
-        return VideoYT(
-            videoID = getVideoID_Fake(),
-            snippet = getSnippetYT_Fake()
-        )
-    }
-
-    private fun getSnippetYT_Fake(): SnippetYT {
-        return SnippetYT(
-            videoID = getVideoID_Fake(),
-            title = "Testing Video",
-            description = "Description video la-la-la-la-la",
-            thumbnails = getThumbnailYT_Fake(),
-            publishTime = "2020.07.22"
-        )
-    }
-
-    private fun getThumbnailYT_Fake(): ThumbnailsYT {
-        return ThumbnailsYT(
-            publishTime = "2020.07.22",
-            defaultSize = ThumbnailType("default image"),
-            mediumSize = ThumbnailType("medium image"),
-            highSize = ThumbnailType("high image")
-        )
-    }
-
-    private fun getVideoID_Fake(): VideoID {
-        return VideoID("ihtZV0sHQ94")
-    }
-
 }

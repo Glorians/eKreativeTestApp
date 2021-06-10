@@ -2,7 +2,6 @@ package ua.glorians.ekreative.test.app.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ListAdapter
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -13,12 +12,14 @@ import ua.glorians.ekreative.test.app.databinding.ItemVideoYoutubeBinding
 
 class VideoListAdapter : RecyclerView.Adapter<VideoListAdapter.VideoViewHolder>() {
 
+    private var oldVideoList = emptyList<VideoYT>()
+
     override fun getItemCount() = differ.currentList.size
     private lateinit var layoutInflater: LayoutInflater
     private lateinit var binding: ItemVideoYoutubeBinding
     private var onItemClickListener: ((VideoYT) -> Unit)? = null
 
-    inner class VideoViewHolder(val view: ItemVideoYoutubeBinding): RecyclerView.ViewHolder(view.root) {
+    inner class VideoViewHolder(view: ItemVideoYoutubeBinding): RecyclerView.ViewHolder(view.root) {
         val title = view.titleItemVideo
         val image = view.thumbnailItemVideo
     }
@@ -58,11 +59,43 @@ class VideoListAdapter : RecyclerView.Adapter<VideoListAdapter.VideoViewHolder>(
         override fun areContentsTheSame(oldItem: VideoYT, newItem: VideoYT): Boolean {
             return oldItem == newItem
         }
-
     }
 
     val differ = AsyncListDiffer(this, differCallback)
 
+}
+
+class MyDiffUtil(
+    private val oldList: List<VideoYT>,
+    private val newList: List<VideoYT>
+) : DiffUtil.Callback() {
+
+    override fun getOldListSize(): Int {
+        return oldList.size
+    }
+
+    override fun getNewListSize(): Int {
+        return newList.size
+    }
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition].videoID.id == newList[newItemPosition].videoID.id
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return when {
+            oldList[oldItemPosition].videoID.id != newList[newItemPosition].videoID.id -> {
+                false
+            }
+            oldList[oldItemPosition].snippet.title != newList[newItemPosition].snippet.title -> {
+                false
+            }
+            oldList[oldItemPosition].snippet.description != newList[newItemPosition].snippet.description -> {
+                false
+            }
+            else -> true
+        }
+    }
 
 }
 

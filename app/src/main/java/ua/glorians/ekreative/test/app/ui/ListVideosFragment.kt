@@ -17,8 +17,6 @@ import ua.glorians.ekreative.test.app.VideoApplication
 import ua.glorians.ekreative.test.app.data.model.VideoYT
 import ua.glorians.ekreative.test.app.databinding.ListVideosFragmentBinding
 import ua.glorians.ekreative.test.app.ui.adapters.VideoListAdapter
-import ua.glorians.ekreative.test.app.utils.showSnack
-import ua.glorians.ekreative.test.app.viewmodel.ListVideosViewModel
 import ua.glorians.ekreative.test.app.viewmodel.VideoViewModel
 import ua.glorians.ekreative.test.app.viewmodel.VideoViewModelFactory
 
@@ -43,22 +41,13 @@ class ListVideosFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         checkAuthorization()
-//        initFields()
+        initFields()
         initFunc()
-        Log.d(TAG, "onStart")
     }
 
     override fun onResume() {
         super.onResume()
         checkAuthorization()
-        Log.d(TAG, "onResume")
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initFields()
-        setAdapter()
-        Log.d(TAG, "onViewCreated")
     }
 
     //Variable Initialization
@@ -69,6 +58,7 @@ class ListVideosFragment : Fragment() {
     //Functions Initialization
     private fun initFunc() {
         loadData()
+        setAdapter()
     }
 
     //Check authorization user

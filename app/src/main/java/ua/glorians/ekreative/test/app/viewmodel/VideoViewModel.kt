@@ -1,6 +1,5 @@
 package ua.glorians.ekreative.test.app.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import ua.glorians.ekreative.test.app.data.model.VideoDetailsYT
@@ -26,7 +25,7 @@ class VideoViewModel(private val repository: RepositoryVideo): ViewModel() {
                 }
             }
         }
-        allVideos = repository.allVideosYT.asLiveData()
+        allVideos = repository.allVideosYT
     }
 
     fun initDetailsVideo(videoID: String) {

@@ -46,7 +46,7 @@ interface YoutubeAPI {
     ) : Response<ResponseVideoDetails>
 
     companion object {
-        const val KEY = BuildConfig.YOUTUBE_API_KEY
+        var KEY = BuildConfig.YOUTUBE_API_KEY
         const val YOUTUBE_CHANNEL_ID = "UCP_IYZTiqbmUqmI3KXHIEoQ"
     }
 }
