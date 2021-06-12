@@ -14,8 +14,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textview.MaterialTextView
 import com.squareup.picasso.Picasso
 import ua.glorians.ekreative.test.app.R
+import ua.glorians.ekreative.test.app.VideoApplication
 import ua.glorians.ekreative.test.app.databinding.DetailVideoFragmentBinding
 import ua.glorians.ekreative.test.app.viewmodel.DetailsVideoViewModel
+import ua.glorians.ekreative.test.app.viewmodel.VideoViewModelFactory
 
 class DetailsVideoFragment : Fragment() {
 
@@ -31,7 +33,9 @@ class DetailsVideoFragment : Fragment() {
     private val args by navArgs<DetailsVideoFragmentArgs>()
     private val videoID by lazy { args.videoID }
     private lateinit var link: String
-    private val viewModel: DetailsVideoViewModel by viewModels()
+    private val viewModel: DetailsVideoViewModel by viewModels {
+        VideoViewModelFactory((requireContext().applicationContext as VideoApplication).repository)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,7 +70,7 @@ class DetailsVideoFragment : Fragment() {
 
     private fun bindData() {
         Log.d(TAG, videoID)
-        viewModel.getVideo(videoID)
+        viewModel.initDetailsVideo(videoID)
         viewModel.video.observe(this) {
             if (it != null) {
                 title.text = it.snippet.title

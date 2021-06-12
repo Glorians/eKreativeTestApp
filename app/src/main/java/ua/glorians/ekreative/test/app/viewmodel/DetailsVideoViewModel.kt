@@ -3,24 +3,23 @@ package ua.glorians.ekreative.test.app.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ua.glorians.ekreative.test.app.data.model.VideoDetailsYT
-import ua.glorians.ekreative.test.app.data.network.RetrofitClient
+import ua.glorians.ekreative.test.app.data.repository.RepositoryVideo
 
-class DetailsVideoViewModel : ViewModel() {
+class DetailsVideoViewModel(val repository: RepositoryVideo) : ViewModel() {
 
     val video = MutableLiveData<VideoDetailsYT?>()
 
-    fun getVideo(id: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val response = RetrofitClient.youtubeAPI.getDetailsVideoByID(id)
+    fun initDetailsVideo(videoID: String) {
+        viewModelScope.launch {
+            val response = repository.getDetailsVideoFromYoutube(videoID)
             if (response.isSuccessful) {
-                val resultVideo = response.body()?.listResult?.get(0)
-                video.postValue(resultVideo)
+                val result = response.body()
+                if (result?.listResult?.isNotEmpty() == true) {
+                    video.postValue(result.listResult[0])
+                }
             }
         }
     }
-
-
 }

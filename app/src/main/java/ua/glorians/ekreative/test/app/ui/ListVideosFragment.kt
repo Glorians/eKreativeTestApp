@@ -1,7 +1,6 @@
 package ua.glorians.ekreative.test.app.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +16,7 @@ import ua.glorians.ekreative.test.app.VideoApplication
 import ua.glorians.ekreative.test.app.data.model.VideoYT
 import ua.glorians.ekreative.test.app.databinding.ListVideosFragmentBinding
 import ua.glorians.ekreative.test.app.ui.adapters.VideoListAdapter
-import ua.glorians.ekreative.test.app.viewmodel.VideoViewModel
+import ua.glorians.ekreative.test.app.viewmodel.ListVideosViewModel
 import ua.glorians.ekreative.test.app.viewmodel.VideoViewModelFactory
 
 class ListVideosFragment : Fragment() {
@@ -26,7 +25,7 @@ class ListVideosFragment : Fragment() {
     private lateinit var binding: ListVideosFragmentBinding
     private lateinit var listVideosRV: RecyclerView
     private lateinit var videoAdapter: VideoListAdapter
-    private val viewModel: VideoViewModel by viewModels {
+    private val viewModel: ListVideosViewModel by viewModels {
         VideoViewModelFactory((requireContext().applicationContext as VideoApplication).repository)
     }
 
