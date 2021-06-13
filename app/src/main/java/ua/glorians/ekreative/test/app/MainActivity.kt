@@ -1,8 +1,9 @@
 package ua.glorians.ekreative.test.app
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import ua.glorians.ekreative.test.app.databinding.ActivityMainBinding
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -23,4 +24,5 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFunc() {}
+    
 }
