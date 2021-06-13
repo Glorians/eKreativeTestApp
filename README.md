@@ -2,6 +2,6 @@
 
 ## Please, add file `secrets.properties` to root folder.
 
-[a relative link] (testApp.apk)
+[APK FILE] (https://github.com/Glorians/eKreativeTestApp/blob/main/testApp.apk)
 
 ![Alt-text](screen_directory.png)
