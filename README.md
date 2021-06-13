@@ -2,6 +2,6 @@
 
 ## Please, add file `secrets.properties` to root folder.
 
-[APK FILE] (testApp.apk)
+[a relative link] (testApp.apk)
 
 ![Alt-text](screen_directory.png)
